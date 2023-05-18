@@ -1,4 +1,4 @@
-.argo22-block.team-member-detail .member-thumbnail {
+.argo22-block.team-member-detail .thumb-wrap img {
   max-width: 100%;
   max-height: 100%;
   width: 300px;
@@ -8,14 +8,14 @@
   border-radius: 150px;
 }
 @media screen and (max-width: 992px) {
-  .argo22-block.team-member-detail .member-thumbnail {
+  .argo22-block.team-member-detail .thumb-wrap img {
     width: 200px;
     height: 200px;
   }
 }
 .argo22-block.team-member-detail .member-position {
-  color: #ffe014;
+  color: var(--wp--preset--color--secondary);
 }
-.argo22-block.team-member-detail a {
+.argo22-block.team-member-detail .contact-details a {
   word-break: break-all;
 }

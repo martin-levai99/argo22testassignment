@@ -195,7 +195,7 @@ class BlockData {
             return $block["style"]["color"]["text"];
         }
         else {
-            return "transparent";
+            return "black";
         }
     }
 

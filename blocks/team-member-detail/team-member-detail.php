@@ -47,20 +47,30 @@
 <!-- Render block -->
 <div id="<?php echo $bD->data['id'] ?>" data-block-id="<?php echo $block["id"]; ?>" class="<?php echo $bD->data['class']; ?> w-100 container-fluid" >  
     
+    <!-- Fields exceprt reviewd posts -->
     <div class="row">
         <!-- Thumbnail -->
         <?php 
             if(in_array("thumbnail", $enabledValues)) {
                 ?>
-                    <div class="col-12 col-lg mb-5 mb-lg-0">
-                        <?php echo get_the_post_thumbnail($member->ID, "large", ['class' => 'member-thumbnail' ]);?>
+                    <div class="thumb-wrap col-12 col-md mb-5 mb-md-0">
+                        <?php
+                            if(has_post_thumbnail($member)) {
+                                echo get_the_post_thumbnail($member->ID, "large");
+                            }
+                            else {
+                                ?>
+                                    <img src="<?php echo get_template_directory_uri() . "/assets/img/default-img.jpg" ?>" alt="Default Image" loading="lazy">
+                                <?php
+                            }
+                        ?>
                     </div>
                 <?php
             }
         ?>
 
         <!-- Name, position, desc & contact details -->
-        <div class="col-12 col-lg d-flex flex-column justify-content-center">
+        <div class="col-12 col-md d-flex flex-column justify-content-center">
             <?php 
                 if(in_array("title", $enabledValues)) {
                     ?>
@@ -92,12 +102,12 @@
             ?>
 
             <!-- Contact details -->
-            <div class="mt-4">
+            <div class="contact-details">
                 <?php 
                     if(in_array("phone_number", $enabledValues)) {
                         $telLink = str_replace(' ', '', htmlspecialchars(get_field("phone_number", $member)));
                         ?>
-                            <div class="my-2">
+                            <div class="mb-2 mt-4">
                                 <a href="tel:<?php echo $telLink; ?>">
                                     <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
@@ -126,4 +136,46 @@
             </div>
         </div>
     </div>
+
+    <!-- Reviewed posts -->
+    <?php 
+        if(in_array("reviewed_posts", $enabledValues)) {
+            ?>
+                <div class="row reviewed-posts mt-5">
+                    <div class="col-12 col-md-5 col-lg-4">
+                        <h4 class="h5">
+                            Latest reviews: 
+                        </h4>
+                    </div>
+
+                    <div class="col-12 col-md-7 col-lg-8 d-flex flex-wrap">
+                        <?php 
+                            $loop = new WP_Query([
+                                "posts_per_page" => 5,
+                                "post_status" => "publish", 
+                                "post_type" => "post",
+                                'meta_query' => [
+                                    [
+                                        'key' => 'reviewer',
+                                        'value' => '"' . $member->ID . '"',
+                                        'compare' => 'LIKE'
+                                    ]
+                                ]
+                            ]); 
+
+                            while($loop->have_posts()) {
+                                $loop->the_post();
+                                ?>
+                                    <a class="post-item me-3 mb-1" href="<?php the_permalink(); ?>">
+                                        <?php the_title(); ?>
+                                    </a>
+                                <?php
+                            }
+                        ?>
+                    </div>
+                </div>
+            <?php
+        }
+    ?>
+
 </div>
