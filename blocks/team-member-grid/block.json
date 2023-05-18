@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "argo22/team-member-grid",
+    "title": "Team Member Grid",
+    "description": "Show multiple team members in columns.",
+    "style": "file:./block.css",
+    "category": "theme",
+    "icon": {
+        "background": "transparent",
+        "foreground": "#ffe014",
+        "src": "groups"
+    },
+    "keywords": [ "team", "person", "argo22", "yellow" ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "team-member-grid.php"
+    },
+    "supports": {
+        "anchor": true,
+        "color": {
+            "background": true,
+            "gradients": true,
+            "text": true,
+            "link": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    }
+}
