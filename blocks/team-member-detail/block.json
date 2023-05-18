@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "argo22/team-member-detail",
+    "title": "Team Member Detail",
+    "description": "Show information about one of your members.",
+    "style": "file:./block.css",
+    "category": "theme",
+    "icon": {
+        "background": "transparent",
+        "foreground": "#ffe014",
+        "src": "businessman"
+    },
+    "keywords": [ "team", "person", "argo22", "yellow" ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "team-member-detail.php"
+    },
+    "supports": {
+        "anchor": true,
+        "color": {
+            "background": true,
+            "gradients": true,
+            "text": true,
+            "link": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    }
+}

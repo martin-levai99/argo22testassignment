@@ -1,29 +1,45 @@
 <?php 
 
 /*--------------------------------
-	Theme support & enqueue assets in FSE editor
+	Full Site Editor supports
 --------------------------------*/
-if ( ! function_exists( 'fse_support_and_assets' ) )  {	
+if ( ! function_exists( 'fse_support' ) )  {	
 	/**
 	 * Add support for blocks and editor style
 	 *
 	 * @return void
 	 */
-	function boostit_support() {
+	function fse_support() {
 	
 		// Add support for block style - must have otherwise default WP blocks will not have CSS
 		add_theme_support( 'wp-block-styles' ); 
 	
 		// Add theme support for adding custom CSS into site editor and add styles to website in FSE editor
-		// + add bootstrap (customized) css
 		add_theme_support( 'editor-styles' );	
-		add_editor_style( '/assets/css/bootstrap.min.css' );
-
+		
 		// Disable default WP patterns (just looks bad)
 		remove_theme_support( 'core-block-patterns' );
 	}
 }
-add_action( 'after_setup_theme', 'fse_support_and_assets' );
+add_action( 'after_setup_theme', 'fse_support' );
+
+
+/*--------------------------------
+	Full Site Editor assets
+--------------------------------*/
+if ( ! function_exists( 'fse_assets' ) )  {	
+	/**
+	 * Enqueue styles and scriptes to FSE
+	 *
+	 * @return void
+	 */
+	function fse_assets() {
+		// Bootstrap
+		add_editor_style( '/assets/css/bootstrap.min.css' );
+		// wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', [], '5.3.2', [] );
+	}
+}
+add_action( 'admin_init', 'fse_assets' );
 
 
 /*--------------------------------
@@ -35,7 +51,7 @@ if ( ! function_exists( 'theme_frontend_assets' ) )  {
 	 *
 	 * @return void
 	 */
-	function boostit_assets() {
+	function theme_frontend_assets() {
 
 		// Deregister jquery (not needed)
 		if ( ! is_admin() ) wp_deregister_script( 'jquery' );
@@ -50,17 +66,17 @@ if ( ! function_exists( 'theme_frontend_assets' ) )  {
 add_action( 'wp_enqueue_scripts', 'theme_frontend_assets');
 
 
-
 /*--------------------------------
 	Register blocks
 --------------------------------*/
 add_action( 'init', 'register_acf_blocks', 5 );
 function register_acf_blocks() {
-	register_block_type( __DIR__ . '/blocks/widgets/advanced-slider' );
+	register_block_type( __DIR__ . '/blocks/team-member-detail' );
+	register_block_type( __DIR__ . '/blocks/team-member-grid' );
 }
 
 
 /*--------------------------------
 	Include additional files
 --------------------------------*/
-include_once("./helpers/native_wp_block_settings.php");
+require_once(__DIR__ . "./helpers/BlockData.php");
