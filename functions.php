@@ -79,4 +79,4 @@ function register_acf_blocks() {
 /*--------------------------------
 	Include additional files
 --------------------------------*/
-require_once(__DIR__ . "./helpers/BlockData.php");
+include get_template_directory() . '/helpers/BlockData.php';
